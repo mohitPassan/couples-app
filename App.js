@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import { StatusBar } from 'react-native';
 import Home from './screens/Home';
+import Photos from './screens/Photos';
 
 export default function App() {
   return (
@@ -12,7 +13,8 @@ export default function App() {
         barStyle="default"
       />
       <Header />
-      <Home />
+      {/* <Home /> */}
+      <Photos />
       <Footer />
     </>
   );

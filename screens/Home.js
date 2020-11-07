@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
     homeStyle: {
         paddingTop: 22,
         paddingHorizontal: 22,
-        // alignItems: "center",
         display: "flex",
         height: "79%"
     },

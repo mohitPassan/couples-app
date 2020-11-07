@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Feather';
 const Header = () => {
     return (
         <View style={styles.headerStyles}>
-            <Text style={styles.textStyles}>Home</Text>
+            <Text style={styles.textStyles}>Photos</Text>
             <Icon name="filter"  size={20}/>
         </View>
     )
