@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, SectionList, StyleSheet, FlatList } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import PhotoComponent from './PhotoComponent';
 import { Divider } from 'react-native-elements';
 import { SectionGrid } from 'react-native-super-grid';
@@ -7,10 +7,17 @@ import { SectionGrid } from 'react-native-super-grid';
 import { connect } from 'react-redux';
 
 const PlanWithPhotos = ({ plans, photos }) => {
-    const plansWithPhotos = Object.entries(photos).map(plan => ({
-        title: plans[plan[0]],
-        data: plan[1]
-    }))
+    const [plansWithPhotos, setPhotos] = useState([]);
+    
+    useEffect(() => {
+        if(plans && photos) {
+            const arr = Object.entries(photos).map(plan => ({
+                title: plans[plan[0]],
+                data: plan[1]
+            }));
+            setPhotos(arr);
+        }
+    }, [photos, plans]);
 
     /*
     [
@@ -30,13 +37,17 @@ const PlanWithPhotos = ({ plans, photos }) => {
 
     return (
         <View>
-            <SectionGrid
-                itemDimension={120}
-                sections={plansWithPhotos}
-                renderItem={({ item }) => <PhotoComponent url={item} />} 
-                renderSectionHeader={({section}) => <Text style={styles.textStyle}>{section.title}</Text>}
-                renderSectionFooter={() => <Divider style={styles.dividerStyle} />}
-            />
+            {
+                plansWithPhotos ? (
+                    <SectionGrid
+                        itemDimension={120}
+                        sections={plansWithPhotos}
+                        renderItem={({ item }) => <PhotoComponent url={item} />} 
+                        renderSectionHeader={({section}) => <Text style={styles.textStyle}>{section.title}</Text>}
+                        renderSectionFooter={() => <Divider style={styles.dividerStyle} />}
+                    />
+                ) : <Text>Wait</Text>
+            }
         </View>
     )
 }

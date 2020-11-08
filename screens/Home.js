@@ -1,20 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import PlanComponent from '../components/PlanComponent';
 
 import { connect } from 'react-redux';
+import { getData } from '../redux/actions';
 
-const Home = ({ plans, statuses }) => {
-    const allPlans = Object.entries(plans);
+const Home = ({ plans, statuses, getDataProp, state }) => {
+    const [allPlans, setAllPlans] = useState([]);
+
+    useEffect(() => {
+        getDataProp();
+    }, []);
+    
+    useEffect(() => {
+        if (plans) {
+            setAllPlans(Object.entries(plans));
+        }
+    }, [plans]);
 
     return (
         <View style={styles.homeStyle}>
             <Text style={styles.textStyle}>Your plans</Text>
-            <FlatList
-                data={allPlans}
-                renderItem={({ item }) => <PlanComponent planID={item[0]} planTitle={item[1]} status={statuses[item[0]]} />}
-                keyExtractor={item => item[0]}
-            />
+            {
+                allPlans ? (
+                    <FlatList
+                        data={allPlans}
+                        renderItem={({ item }) => <PlanComponent planID={item[0]} planTitle={item[1]} status={statuses[item[0]]} />}
+                        keyExtractor={item => item[0]}
+                    />
+                ) : <Text>Wait</Text>
+            }
         </View>
     )
 }
@@ -36,7 +51,12 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
     plans: state.plans,
-    statuses: state.statuses
+    statuses: state.statuses,
+    state
 });
 
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = (dispatch) => ({
+    getDataProp: () => dispatch(getData())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
