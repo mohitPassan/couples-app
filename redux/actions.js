@@ -7,3 +7,8 @@ export const changePlanStatus = (plan, status) => ({
     type: 'CHANGE_PLAN_STATUS',
     payload: { plan, status }
 })
+
+export const addPlan = (title) => ({
+    type: 'ADD_PLAN',
+    payload: title
+})

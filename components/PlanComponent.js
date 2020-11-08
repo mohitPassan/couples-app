@@ -1,61 +1,125 @@
-import React, { useState } from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { CheckBox } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/Feather';
 
 import { connect } from 'react-redux';
 import { changePlanStatus } from '../redux/actions';
 
-const PlanComponent = ({ planID, planTitle, status, setPlanStatus, state }) => {
-    // console.log(state);
+const PlanComponent = ({ planID, planTitle, status, setPlanStatus }) => {
     const checked = status !== 'not-done';
 
     return (
-        <CheckBox
-            title={planTitle}
-            checked={checked}
-            containerStyle={styles.checkBoxStyle}
-            textStyle={styles.textStyle}
-            uncheckedIcon={
-                <View style={styles.iconStyle} />
+        <>
+            {
+                status === 'done-with-photos' && (
+                    <View style={styles.checkBoxContainer}>
+                        <View style={styles.checkBoxStyle}>
+                            <Text style={styles.textStyle}>{planTitle}</Text>
+                            <TouchableOpacity style={styles.uploadButtonStyles}>
+                                <View style={{
+                                    alignItems: 'center'
+                                }}>
+                                    <Icon name="grid" color="#FFF" size={25} />
+                                    <Text style={{
+                                        color: 'white',
+                                        fontSize: 9,
+                                        marginTop: 6
+                                    }}>View Images</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                )
             }
-            checkedIcon={
-                <View style={styles.iconStyle}>
-                    <Image style={styles.tickComponent} source={require('../assets/tick.png')} />
-                </View>
+            {
+                (status === 'done' || status === 'not-done') && (
+                    <View style={styles.checkBoxContainer}>
+                        <CheckBox
+                            title={planTitle}
+                            checked={checked}
+                            containerStyle={styles.checkBoxStyle}
+                            textStyle={styles.textStyle}
+                            uncheckedIcon={
+                                <View style={styles.iconStyle} />
+                            }
+                            checkedIcon={
+                                <View style={styles.iconStyle}>
+                                    {
+                                        status === 'done' && <Icon name="check" color="#DA0B0B" size={35} style={styles.tickComponent} />
+                                    }
+                                </View>
+                            }
+                            onPress={() => {
+                                let newStatus;
+                                if (status === 'not-done') {
+                                    newStatus = 'done';
+                                }
+                                else {
+                                    newStatus = 'not-done'
+                                }
+                                // console.log(state);
+                                setPlanStatus(planID, newStatus);
+                            }}
+                        />
+                        {
+                            checked && (
+                                <TouchableOpacity style={styles.uploadButtonStyles}>
+                                    <View style={{
+                                        alignItems: 'center'
+                                    }}>
+                                        <Icon name="upload" color="#FFF" size={25} />
+                                        <Text style={{
+                                            color: 'white',
+                                            fontSize: 9,
+                                            marginTop: 6
+                                        }}>Upload Images</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            )
+                        }
+                    </View>
+                )
             }
-            onPress={() => {
-                let newStatus;
-                if(status === 'not-done') {
-                    newStatus = 'done';
-                }
-                else {
-                    newStatus = 'not-done'
-                }
-                console.log(state);
-                setPlanStatus(planID, newStatus);
-            }}
-        />
+        </>
     )
 };
+
+// {
+//     checked && (
+//   <View style={styles.uploadButtonStyles}>
+//     <Icon name="upload" color="#FFF" size={25} />
+//     <Text style={{
+//       color: 'white',
+//       fontSize: 9,
+//       marginTop: 6
+//     }}>Upload Images</Text>
+//   </View>
+//     )
+//   }
 
 const styles = StyleSheet.create({
     checkBoxStyle: {
         height: 80,
         backgroundColor: 'white',
         borderRadius: 6,
-        width: "90%",
+        width: "100%",
         marginLeft: 1,
         elevation: 2,
         marginVertical: 10,
         padding: 0,
         display: "flex",
         justifyContent: "center",
-        paddingLeft: 15
+        paddingLeft: 15,
+        position: "relative",
+        marginTop: 1,
     },
 
     textStyle: {
         fontSize: 16,
-        paddingLeft: 5
+        paddingLeft: 5,
+        fontWeight: 'bold',
+        color: '#595959'
     },
 
     iconStyle: {
@@ -67,20 +131,36 @@ const styles = StyleSheet.create({
     },
 
     tickComponent: {
-        width: 26,
-        height: 27,
+        width: 50,
+        height: 50,
         position: "relative",
-        bottom: 3,
-        left: 1
+        bottom: 8,
+        left: -1,
+    },
+
+    uploadButtonStyles: {
+        backgroundColor: '#DA0B0B',
+        position: "absolute",
+        height: 81,
+        right: 0,
+        borderTopRightRadius: 6,
+        borderBottomRightRadius: 6,
+        width: 85,
+        display: "flex",
+        alignItems: 'center',
+        justifyContent: 'center',
+        elevation: 3
+    },
+
+    checkBoxContainer: {
+        height: 85,
+        marginTop: 25,
+        width: '90%',
     }
 });
-
-const mapStateToProps = (state) => ({
-    state: state
-})
 
 const mapDispatchToProps = (dispatch) => ({
     setPlanStatus: (plan, status) => dispatch(changePlanStatus(plan, status))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(PlanComponent);
+export default connect(null, mapDispatchToProps)(PlanComponent);

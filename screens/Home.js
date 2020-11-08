@@ -4,7 +4,7 @@ import PlanComponent from '../components/PlanComponent';
 
 import { connect } from 'react-redux';
 
-const Home = ({ plans }) => {
+const Home = ({ plans, statuses }) => {
     const allPlans = Object.entries(plans);
 
     return (
@@ -12,7 +12,7 @@ const Home = ({ plans }) => {
             <Text style={styles.textStyle}>Your plans</Text>
             <FlatList
                 data={allPlans}
-                renderItem={({ item }) => <PlanComponent planID={item[0]} planTitle={item[1].title} status={item[1].status} />}
+                renderItem={({ item }) => <PlanComponent planID={item[0]} planTitle={item[1]} status={statuses[item[0]]} />}
                 keyExtractor={item => item[0]}
             />
         </View>
@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => ({
-    plans: state.plans
+    plans: state.plans,
+    statuses: state.statuses
 });
 
 export default connect(mapStateToProps)(Home);

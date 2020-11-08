@@ -6,8 +6,27 @@ import { SectionGrid } from 'react-native-super-grid';
 
 import { connect } from 'react-redux';
 
-const PlanWithPhotos = ({ plans }) => {
-    const plansWithPhotos = Object.values(plans).filter(i => i.status === 'done-with-photos');
+const PlanWithPhotos = ({ plans, photos }) => {
+    const plansWithPhotos = Object.entries(photos).map(plan => ({
+        title: plans[plan[0]],
+        data: plan[1]
+    }))
+
+    /*
+    [
+        [
+            0: Plan #3,
+            1: [ photos array ]
+        ]
+    ]
+
+    [
+        {
+            data: [ photos array]
+            section: 'Plan 3 name
+        }
+    ]
+    */
 
     return (
         <View>
@@ -37,7 +56,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => ({
-    plans: state.plans
+    plans: state.plans,
+    photos: state.photos
 });
 
 export default connect(mapStateToProps)(PlanWithPhotos);

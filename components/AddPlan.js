@@ -1,15 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { Button } from 'react-native-elements';
 
-const AddPlan = ({ close }) => {
+import { connect } from 'react-redux';
+
+import { addPlan } from '../redux/actions';
+
+const AddPlan = ({ state, close, addNewPlan }) => {
+    const [name, setName] = useState('');
+
+    const handlePress = () => {
+        addNewPlan(name);
+        close();
+        // console.log(state);
+    }
+
+    const handleChange = (value) => {
+        // console.log(value);
+        // console.log(value)
+        setName(value);
+    }
+
     return (
         <View style={styles.containerStyle}>
             <Text style={styles.textStyle}>What do you wanna do?</Text>
-            <TextInput style={styles.inputStyle} />
+            <TextInput value={name} onChangeText={handleChange} style={styles.inputStyle} />
             <View style={styles.buttonContainer}>
                 <Button titleStyle={styles.cancelButtonStyles} buttonStyle={{marginRight: 15}} title="Cancel" type="clear" onPress={close} />
-                <Button titleStyle={styles.addButtonTitleStyle} buttonStyle={styles.addButtonContainerStyle} title="Add" onPress={close} />
+                <Button titleStyle={styles.addButtonTitleStyle} buttonStyle={styles.addButtonContainerStyle} title="Add" onPress={handlePress} />
             </View>
         </View>
     )
@@ -18,7 +36,7 @@ const AddPlan = ({ close }) => {
 const styles = StyleSheet.create({
     containerStyle: {
         height: 250,
-        backgroundColor: '#FA3838',
+        backgroundColor: '#DA0B0B',
         position: "absolute",
         bottom: 0,
         width: '100%',
@@ -64,9 +82,17 @@ const styles = StyleSheet.create({
     },
 
     addButtonTitleStyle: {
-        color: '#FA3838',
+        color: '#DA0B0B',
         fontWeight: 'bold',
     }
 });
 
-export default AddPlan
+const mapStateToProps = (state) => ({
+    state: state
+})
+
+const mapDispatchToProps = (dispatch) => ({
+    addNewPlan: (title) => dispatch(addPlan(title))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddPlan);
