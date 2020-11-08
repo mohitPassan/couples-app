@@ -2,35 +2,18 @@ import React from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import PlanComponent from '../components/PlanComponent';
 
-const Home = () => {
-    const plans = [
-        "Plan #1",
-        "Plan #2",
-        "Plan #3",
-        "Plan #4",
-        "Plan #5",
-        "Plan #6",
-        "Plan #7",
-        "Plan #8",
-        "Plan #9",
-        "Plan #10",
-        "Plan #11",
-        "Plan #12",
-        "Plan #13",
-        "Plan #14",
-        "Plan #15",
-        "Plan #16",
-        "Plan #17",
-    ];
+import { connect } from 'react-redux';
+
+const Home = ({ plans }) => {
+    const allPlans = Object.entries(plans);
 
     return (
         <View style={styles.homeStyle}>
             <Text style={styles.textStyle}>Your plans</Text>
-
             <FlatList
-                data={plans}
-                renderItem={({ item }) => <PlanComponent plan={item} />}
-                keyExtractor={item => item}
+                data={allPlans}
+                renderItem={({ item }) => <PlanComponent planID={item[0]} planTitle={item[1].title} status={item[1].status} />}
+                keyExtractor={item => item[0]}
             />
         </View>
     )
@@ -49,6 +32,10 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         marginBottom: 10
     }
-})
+});
 
-export default Home;
+const mapStateToProps = (state) => ({
+    plans: state.plans
+});
+
+export default connect(mapStateToProps)(Home);

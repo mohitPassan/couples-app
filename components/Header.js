@@ -2,10 +2,17 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
-const Header = () => {
+import { connect } from 'react-redux';
+
+const Header = ({ screen }) => {
     return (
         <View style={styles.headerStyles}>
-            <Text style={styles.textStyles}>Photos</Text>
+            {
+                screen === 'home' && <Text style={styles.textStyles}>Home</Text>
+            }
+            {
+                screen === 'photos' && <Text style={styles.textStyles}>Photos</Text>
+            }
             <Icon name="filter"  size={20}/>
         </View>
     )
@@ -28,6 +35,10 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: "bold"
     }
+});
+
+const mapStateToProps = (state) => ({
+    screen: state.screen
 })
 
-export default Header;
+export default connect(mapStateToProps)(Header);

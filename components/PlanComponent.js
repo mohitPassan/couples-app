@@ -2,12 +2,16 @@ import React, { useState } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 
-const PlanComponent = ({ plan }) => {
-    const [checked, setChecked] = useState(false);
+import { connect } from 'react-redux';
+import { changePlanStatus } from '../redux/actions';
+
+const PlanComponent = ({ planID, planTitle, status, setPlanStatus, state }) => {
+    // console.log(state);
+    const checked = status !== 'not-done';
 
     return (
         <CheckBox
-            title={plan}
+            title={planTitle}
             checked={checked}
             containerStyle={styles.checkBoxStyle}
             textStyle={styles.textStyle}
@@ -20,7 +24,15 @@ const PlanComponent = ({ plan }) => {
                 </View>
             }
             onPress={() => {
-                setChecked(!checked)
+                let newStatus;
+                if(status === 'not-done') {
+                    newStatus = 'done';
+                }
+                else {
+                    newStatus = 'not-done'
+                }
+                console.log(state);
+                setPlanStatus(planID, newStatus);
             }}
         />
     )
@@ -61,6 +73,14 @@ const styles = StyleSheet.create({
         bottom: 3,
         left: 1
     }
+});
+
+const mapStateToProps = (state) => ({
+    state: state
 })
 
-export default PlanComponent;
+const mapDispatchToProps = (dispatch) => ({
+    setPlanStatus: (plan, status) => dispatch(changePlanStatus(plan, status))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlanComponent);

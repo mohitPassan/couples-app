@@ -1,21 +1,16 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
-import Header from './components/Header';
-import Footer from './components/Footer';
 import { StatusBar } from 'react-native';
-import Home from './screens/Home';
-import Photos from './screens/Photos';
+import { Provider } from 'react-redux';
+import store from './redux/store'
+import CustomRouter from './components/CustomRouter';
 
 export default function App() {
   return (
-    <>
+    <Provider store={store}>
       <StatusBar
         barStyle="default"
       />
-      <Header />
-      {/* <Home /> */}
-      <Photos />
-      <Footer />
-    </>
+      <CustomRouter />
+    </Provider>
   );
 }
