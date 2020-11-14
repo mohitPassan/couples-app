@@ -19,22 +19,6 @@ const PlanWithPhotos = ({ plans, photos }) => {
         }
     }, [photos, plans]);
 
-    /*
-    [
-        [
-            0: Plan #3,
-            1: [ photos array ]
-        ]
-    ]
-
-    [
-        {
-            data: [ photos array]
-            section: 'Plan 3 name
-        }
-    ]
-    */
-
     return (
         <View>
             {

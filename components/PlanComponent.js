@@ -5,8 +5,11 @@ import Icon from 'react-native-vector-icons/Feather';
 
 import { connect } from 'react-redux';
 import { changePlanStatus } from '../redux/actions';
+import { setUploadModalOpen } from '../redux/actions';
+import { setPlanToUploadImagesTo } from '../redux/actions';
+import { changeScreen } from '../redux/actions';
 
-const PlanComponent = ({ planID, planTitle, status, setPlanStatus }) => {
+const PlanComponent = ({ planID, planTitle, status, setPlanStatus, setUploadModalOpen, setPlanToUploadImagesTo, setScreen }) => {
     const checked = status !== 'not-done';
 
     return (
@@ -16,7 +19,10 @@ const PlanComponent = ({ planID, planTitle, status, setPlanStatus }) => {
                     <View style={styles.checkBoxContainer}>
                         <View style={styles.checkBoxStyle}>
                             <Text style={styles.textStyle}>{planTitle}</Text>
-                            <TouchableOpacity style={styles.uploadButtonStyles}>
+                            <TouchableOpacity 
+                            style={styles.uploadButtonStyles}
+                            onPress={() => setScreen('photos')}
+                            >
                                 <View style={{
                                     alignItems: 'center'
                                 }}>
@@ -64,7 +70,10 @@ const PlanComponent = ({ planID, planTitle, status, setPlanStatus }) => {
                         />
                         {
                             checked && (
-                                <TouchableOpacity style={styles.uploadButtonStyles}>
+                                <TouchableOpacity style={styles.uploadButtonStyles} onPress={() => {
+                                    setUploadModalOpen(true);
+                                    setPlanToUploadImagesTo(planID, planTitle);
+                                }}>
                                     <View style={{
                                         alignItems: 'center'
                                     }}>
@@ -84,19 +93,6 @@ const PlanComponent = ({ planID, planTitle, status, setPlanStatus }) => {
         </>
     )
 };
-
-// {
-//     checked && (
-//   <View style={styles.uploadButtonStyles}>
-//     <Icon name="upload" color="#FFF" size={25} />
-//     <Text style={{
-//       color: 'white',
-//       fontSize: 9,
-//       marginTop: 6
-//     }}>Upload Images</Text>
-//   </View>
-//     )
-//   }
 
 const styles = StyleSheet.create({
     checkBoxStyle: {
@@ -160,7 +156,10 @@ const styles = StyleSheet.create({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    setPlanStatus: (plan, status) => dispatch(changePlanStatus(plan, status))
+    setPlanStatus: (plan, status) => dispatch(changePlanStatus(plan, status)),
+    setUploadModalOpen: (status) => dispatch(setUploadModalOpen(status)),
+    setPlanToUploadImagesTo: (planId, planTitle) => dispatch(setPlanToUploadImagesTo(planId, planTitle)),
+    setScreen: (screen) => dispatch(changeScreen(screen))
 })
 
 export default connect(null, mapDispatchToProps)(PlanComponent);

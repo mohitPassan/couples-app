@@ -1,6 +1,7 @@
 const INITIAL_STATE = {
     screen: 'home',
-    
+    uploadModalOpen: false,
+    planToUploadImagesTo: null
 }
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -36,6 +37,16 @@ const reducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 ...action.payload
+            }
+        case 'SET_UPLOAD_MODAL_OPEN':
+            return {
+                ...state,
+                uploadModalOpen: action.payload
+            }
+        case 'SET_PLAN_TO_UPLOAD_IMAGES_TO':
+            return {
+                ...state,
+                planToUploadImagesTo: action.payload
             }
         default:
             return state;
