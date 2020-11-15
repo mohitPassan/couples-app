@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StatusBar } from "react-native";
+import { StatusBar } from 'expo-status-bar';
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import CustomRouter from "./components/CustomRouter";
@@ -17,7 +17,7 @@ console.warn = (message) => {
 export default function App() {
   return (
     <Provider store={store}>
-      <StatusBar barStyle="default" />
+      <StatusBar style="auto" />
       <CustomRouter />
     </Provider>
   );
