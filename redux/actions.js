@@ -1,4 +1,5 @@
 import firebase from "../firebase.config";
+import { nanoid } from "nanoid/async/index.native";
 
 export const changeScreen = (screen) => ({
   type: "CHANGE_SCREEN",
@@ -43,7 +44,12 @@ export const setUploadModalOpen = (status) => {
   };
 };
 
-const uploadToStore = async (plan, index, image, callback) => {
+async function createUser() {
+  const id = await nanoid();
+  return id;
+}
+
+const uploadToStore = async (plan, image, callback) => {
   // Create the file metadata
   var metadata = {
     contentType: "image/jpeg",
@@ -51,9 +57,13 @@ const uploadToStore = async (plan, index, image, callback) => {
 
   const response = await fetch(image);
   const blob = await response.blob();
+  const name = await createUser();
 
   // Upload file and metadata to the object 'images/mountains.jpg'
-  var uploadTask = firebase.storage().ref("/" + plan + '/' + index).put(blob, metadata);
+  var uploadTask = firebase
+    .storage()
+    .ref("/" + plan + "/" + name)
+    .put(blob, metadata);
 
   // Listen for state changes, errors, and completion of the upload.
   uploadTask.on(
@@ -77,17 +87,17 @@ const uploadToStore = async (plan, index, image, callback) => {
       switch (error.code) {
         case "storage/unauthorized":
           // User doesn't have permission to access the object
-          console.log('unauthorized');
+          console.log("unauthorized");
           break;
 
         case "storage/canceled":
           // User canceled the upload
-          console.log('canceled');
+          console.log("canceled");
           break;
 
         case "storage/unknown":
           // Unknown error occurred, inspect error.serverResponse
-          console.log('unknown');
+          console.log("unknown");
           break;
       }
     },
@@ -101,25 +111,39 @@ const uploadToStore = async (plan, index, image, callback) => {
   );
 };
 
-export const uploadImages = (plan, images) => {
+export const uploadImages = (plan, images, callback) => {
   return () => {
     console.log(plan, images);
     let urlsArray = [];
     let imagesUploaded = 0;
     images.forEach((image, index, array) => {
-        uploadToStore(plan.title, index, image, (url) => {
-            imagesUploaded++;
-            urlsArray.push(url);
-            
-            // console.log(imagesUploaded);
-            
-            if(imagesUploaded === array.length) {
-                console.log('done');
-                firebase.database().ref('/photos/' + plan.id).set(urlsArray);
-                firebase.database().ref('/statuses/' + plan.id).set('done-with-photos');
-            }
-        })
-    })
+      uploadToStore(plan.title, image, async (url) => {
+        imagesUploaded++;
+        urlsArray.push(url);
+
+        // console.log(imagesUploaded);
+
+        if (imagesUploaded === array.length) {
+          console.log("done");
+          callback();
+          const photosRef = firebase.database().ref("/photos/" + plan.id);
+          let photos = [];
+          await photosRef.once('value').then((snapshot) => {
+            photos = snapshot.val();
+          });
+
+          let finalArray = [];
+          if(photos) {
+            finalArray = [...urlsArray, ...photos];
+          }
+          else {
+            finalArray = [...urlsArray];
+          }
+          photosRef.set(finalArray);
+          firebase.database().ref("/statuses/" + plan.id).set("done-with-photos");
+        }
+      });
+    });
   };
 };
 
@@ -127,8 +151,20 @@ export const setPlanToUploadImagesTo = (planId, planTitle) => {
   return {
     type: "SET_PLAN_TO_UPLOAD_IMAGES_TO",
     payload: {
-        id: planId,
-        title: planTitle
-    }
+      id: planId,
+      title: planTitle,
+    },
   };
 };
+
+export const viewImage = (status) => {
+  return {
+    type: "VIEW_IMAGE",
+    payload: status,
+  };
+};
+
+export const setImage = (image) => ({
+  type: "SET_IMAGE",
+  payload: image,
+});

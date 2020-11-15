@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Modal,
   TouchableHighlight,
+  ToastAndroid,
 } from "react-native";
 import { Button } from "react-native-elements";
 import Constants from "expo-constants";
@@ -12,11 +13,19 @@ import { ImageBrowser } from "expo-image-picker-multiple";
 import { connect } from "react-redux";
 import { setUploadModalOpen } from "../redux/actions";
 import { uploadImages } from "../redux/actions";
-import firebase from '../firebase.config';
+import firebase from "../firebase.config";
+import { changeScreen } from '../redux/actions';
 
-const ImagesContainer = ({ modalVisible, setUploadModalOpen, planToUploadImagesTo, uploadImages }) => {
+const ImagesContainer = ({
+  modalVisible,
+  setUploadModalOpen,
+  planToUploadImagesTo,
+  uploadImages,
+  setScreen
+}) => {
   const [count, setCount] = useState(0);
   const [images, setImages] = useState([]);
+  const [upload, setUpload] = useState(false);
 
   const imagesCallback = (callback) => {
     callback
@@ -40,9 +49,19 @@ const ImagesContainer = ({ modalVisible, setUploadModalOpen, planToUploadImagesT
 
   const handleUpload = () => {
     // console.log(images);
-    const imageFiles = images.map(image => image.uri);
-    uploadImages(planToUploadImagesTo, imageFiles);
-  }
+    const imageFiles = images.map((image) => image.uri);
+    if (imageFiles.length === 0) {
+      ToastAndroid.show("Please select atleast one image", ToastAndroid.SHORT);
+    }
+    else {
+      setUpload(true);
+      uploadImages(planToUploadImagesTo, imageFiles, () => {
+        setUpload(false);
+        setUploadModalOpen(false);
+        setScreen('photos');
+      });
+    }
+  };
 
   const emptyStayComponent = <Text style={styles.emptyStay}>Empty =(</Text>;
   const noCameraPermissionComponent = (
@@ -63,13 +82,20 @@ const ImagesContainer = ({ modalVisible, setUploadModalOpen, planToUploadImagesT
           <View style={styles.modalView}>
             <View style={styles.modalHeader}>
               <Text style={[styles.textStyle, { fontSize: 18 }]}>
-                Add photos to {planToUploadImagesTo ? planToUploadImagesTo.title : ''}
+                Add photos to{" "}
+                {planToUploadImagesTo ? planToUploadImagesTo.title : ""}
               </Text>
             </View>
             <View style={styles.imagesContainer}>
               <View style={{ marginVertical: 20 }}>
-                <Text style={{ fontWeight: "bold", fontSize: 16, textAlign: 'left' }}>
-                  {count} image{count !== 1 ? 's' : null} selected
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: 16,
+                    textAlign: "left",
+                  }}
+                >
+                  {count} image{count !== 1 ? "s" : null} selected
                 </Text>
               </View>
               <ImageBrowser
@@ -97,22 +123,14 @@ const ImagesContainer = ({ modalVisible, setUploadModalOpen, planToUploadImagesT
                 buttonStyle={styles.addButtonContainerStyle}
                 title="Upload"
                 onPress={() => {
-                  handleUpload()
+                  handleUpload();
                 }}
+                loading={upload}
               />
             </View>
           </View>
         </View>
       </Modal>
-
-      {/* <TouchableHighlight
-        style={styles.openButton}
-        onPress={() => {
-          setModalVisible(true);
-        }}
-      >
-        <Text style={styles.textStyle}>Show Modal</Text>
-      </TouchableHighlight> */}
     </View>
   );
 };
@@ -132,14 +150,11 @@ const styles = StyleSheet.create({
     width: 50,
     // borderRadius: 25,
     position: "absolute",
-    left: '50%',
-    top: '50%',
+    left: "50%",
+    top: "50%",
     justifyContent: "center",
     backgroundColor: "#DA0B0B",
-    transform: [
-      { translateX: -25 },
-      { translateY: -25 }
-    ]
+    transform: [{ translateX: -25 }, { translateY: -25 }],
   },
 
   countBadgeText: {
@@ -219,12 +234,13 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   modalVisible: state.uploadModalOpen,
-  planToUploadImagesTo: state.planToUploadImagesTo
+  planToUploadImagesTo: state.planToUploadImagesTo,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setUploadModalOpen: (status) => dispatch(setUploadModalOpen(status)),
-  uploadImages: (planId, images) => dispatch(uploadImages(planId, images)),
+  uploadImages: (planId, images, callback) => dispatch(uploadImages(planId, images, callback)),
+  setScreen: (screen) => dispatch(changeScreen(screen))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ImagesContainer);

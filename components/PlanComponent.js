@@ -20,6 +20,24 @@ const PlanComponent = ({ planID, planTitle, status, setPlanStatus, setUploadModa
                         <View style={styles.checkBoxStyle}>
                             <Text style={styles.textStyle}>{planTitle}</Text>
                             <TouchableOpacity 
+                            style={styles.uploadMorePhotos}
+                            onPress={() => {
+                                setUploadModalOpen(true);
+                                setPlanToUploadImagesTo(planID, planTitle);
+                            }}
+                            >
+                                <View style={{
+                                    alignItems: 'center'
+                                }}>
+                                    <Icon name="upload" color="#FFF" size={25} />
+                                    <Text style={{
+                                        color: 'white',
+                                        fontSize: 9,
+                                        marginTop: 6
+                                    }}>Upload images</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <TouchableOpacity 
                             style={styles.uploadButtonStyles}
                             onPress={() => setScreen('photos')}
                             >
@@ -34,6 +52,7 @@ const PlanComponent = ({ planID, planTitle, status, setPlanStatus, setUploadModa
                                     }}>View Images</Text>
                                 </View>
                             </TouchableOpacity>
+                            
                         </View>
                     </View>
                 )
@@ -141,6 +160,22 @@ const styles = StyleSheet.create({
         right: 0,
         borderTopRightRadius: 6,
         borderBottomRightRadius: 6,
+        width: 85,
+        display: "flex",
+        alignItems: 'center',
+        justifyContent: 'center',
+        elevation: 3
+    },
+    
+    uploadMorePhotos: {
+        backgroundColor: '#DA0B0B',
+        position: "absolute",
+        height: 81,
+        right: 85,
+        // borderTopRightRadius: 6,
+        // borderBottomRightRadius: 6,
+        borderRightColor: 'black',
+        borderRightWidth: 0.2,
         width: 85,
         display: "flex",
         alignItems: 'center',

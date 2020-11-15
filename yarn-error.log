@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add expo-image-picker@~9.1.1
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add expo-random@~9.0.0
 
 PATH: 
   C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Mohit\AppData\Roaming\SPB_16.6\bin;C:\Python27;C:\Python27\Scripts;C:\Python38\Scripts;C:\Python38;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\iCLS;C:\Program Files\Intel\Intel(R) Management Engine Components\iCLS;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Intel\WiFi\bin;C:\Program Files\Common Files\Intel\WirelessCommon;C:\Program Files\Microsoft SQL Server\130\Tools\Binn;C:\MinGW\bin;C:\Program Files\R\R-3.5.3\bin;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files (x86)\mingw-w64\i686-8.1.0-posix-dwarf-rt_v6-rev0\mingw32\bin;C:\Program Files (x86)\Yarn\bin;C:\Program Files\nodejs;C:\Program Files\OpenJDK\openjdk-8u262-b10\bin;C:\Users\Mohit\AppData\Local\Android\Sdk\platform-tools;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;D:\PSpice\tools\pcb\bin;D:\PSpice\tools\fet\bin;D:\PSpice\OpenAccess\bin\win32\opt;D:\PSpice\tools\bin;D:\PSpice\tools\Capture;D:\PSpice\tools\PSpice;C:\Users\Mohit\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Sublime Text 3;C:\Users\Mohit\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Mohit\AppData\Local\Yarn\bin;C:\Users\Mohit\AppData\Local\Android\Sdk\platform-tools;C:\Users\Mohit\AppData\Local\Android\Sdk;C:\Users\Mohit\AppData\Roaming\npm
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'D:\MyApps\CouplesApp\node_modules\@babel\helper-compilation-targets\node_modules\.bin'
+  Error: EPERM: operation not permitted, unlink 'D:\MyApps\CouplesApp\node_modules\@babel\generator\node_modules\.bin'
 
 npm manifest: 
   {
@@ -31,6 +31,7 @@ npm manifest:
       "@react-navigation/bottom-tabs": "^5.10.6",
       "@react-navigation/native": "^5.8.6",
       "expo": "~39.0.2",
+      "expo-image-picker-multiple": "^1.2.4",
       "expo-status-bar": "~1.0.2",
       "firebase": "^8.0.1",
       "react": "16.13.1",
@@ -38,6 +39,7 @@ npm manifest:
       "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz",
       "react-native-elements": "^3.0.0-alpha.1",
       "react-native-gesture-handler": "~1.7.0",
+      "react-native-image-viewing": "^0.2.0",
       "react-native-reanimated": "~1.13.0",
       "react-native-safe-area-context": "3.1.4",
       "react-native-screens": "~2.10.1",
@@ -2961,6 +2963,15 @@ Lockfile:
       fbjs "1.0.0"
       fontfaceobserver "^2.1.0"
   
+  expo-image-picker-multiple@^1.2.4:
+    version "1.2.4"
+    resolved "https://registry.yarnpkg.com/expo-image-picker-multiple/-/expo-image-picker-multiple-1.2.4.tgz#a108dee2c7fc7f678ba98502d9bb4cd9b7cd3131"
+    integrity sha512-TMiRtuUw42OMyt+MnZwASToSNvkdHpPw7ycGjs82aTxR/nZNtfHw7rBrvZG6IYBiZpGiE20pyI6iVk351Jlepw==
+    dependencies:
+      expo-media-library "^8.0.0"
+      expo-permissions "^8.0.0"
+      expo-screen-orientation "^1.0.0"
+  
   expo-keep-awake@~8.3.0:
     version "8.3.0"
     resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-8.3.0.tgz#11bb8073dfe453259926855c81d9f35db03a79b9"
@@ -2985,10 +2996,27 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/expo-location/-/expo-location-9.0.1.tgz#adf93b8adf5e9dcf9570cba1d66c8e3831329156"
     integrity sha512-yl4V2IelxrjG1h3nshkyILwghysNJvvEuR4Of0U7oYAsBrT0cq8NxFuaDemRvqt9Yb19wVFNMoVtYFNpthcqpQ==
   
+  expo-media-library@^8.0.0:
+    version "8.5.0"
+    resolved "https://registry.yarnpkg.com/expo-media-library/-/expo-media-library-8.5.0.tgz#b3364cfaf9458a940c68405ee170f879708d9f4c"
+    integrity sha512-U3bXrSX4SJhyN1tEQCf+M0mxksQ7H8a4UcUUJf5kGwXtSndmll/YvXMVkHjX/dqHPYeRB9o+UDhb+LGrgWJYfg==
+  
+  expo-permissions@^8.0.0:
+    version "8.2.0"
+    resolved "https://registry.yarnpkg.com/expo-permissions/-/expo-permissions-8.2.0.tgz#6b23e0c18ca84e34d7b0ffb425d56a3818ac6fd6"
+    integrity sha512-XH+7ybVnIkf6KQeVHM5Q+nyvWbdflKVXfLbU1lBBH25R1s0EBt7wvh9hK1OzCQ8AkvrbpRqsjenqYFD8lgP/sA==
+  
   expo-permissions@~9.3.0:
     version "9.3.0"
     resolved "https://registry.yarnpkg.com/expo-permissions/-/expo-permissions-9.3.0.tgz#b90c7e9e411d306c1c7ba2bae18d5c53c201affd"
     integrity sha512-ylSJZVvEGJVFTKsFrUL2S6gCvFt+/o8TJ3xT4WaMjHe2/2Z7R8ng6NR47Kt54t7XBIV/SZ7DIY9uRiR7TPuNYA==
+  
+  expo-screen-orientation@^1.0.0:
+    version "1.1.1"
+    resolved "https://registry.yarnpkg.com/expo-screen-orientation/-/expo-screen-orientation-1.1.1.tgz#515776e534530efdb716e56ec0c47cf8fb9de82f"
+    integrity sha512-o3RhmidIhVK4lXHVActnO2iD0ZrZKxzWuRrJaTSpRsvRjCabeE74xkpZWPGcEcXhAxEwMaAAizHO8rlJDdrVzw==
+    dependencies:
+      fbjs "1.0.0"
   
   expo-splash-screen@~0.6.2:
     version "0.6.2"
@@ -5349,6 +5377,11 @@ Lockfile:
       hoist-non-react-statics "^2.3.1"
       invariant "^2.2.4"
       prop-types "^15.7.2"
+  
+  react-native-image-viewing@^0.2.0:
+    version "0.2.0"
+    resolved "https://registry.yarnpkg.com/react-native-image-viewing/-/react-native-image-viewing-0.2.0.tgz#3c0bc67cfb9aa7607cec632139d7ef4c45e07e4e"
+    integrity sha512-j2JXv86WRXGNme4LPsNCJ/2MgX+oVbmJ5ZLbGrYbKXcCPe9OshqlQI5L3SdbAxWu/F5pubcMaXp0zoYNaZVuzA==
   
   react-native-iphone-x-helper@^1.3.0:
     version "1.3.0"
