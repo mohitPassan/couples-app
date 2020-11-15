@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     left: "50%",
     top: "50%",
     justifyContent: "center",
-    backgroundColor: "#DA0B0B",
+    backgroundColor: "#f33030",
     transform: [{ translateX: -25 }, { translateY: -25 }],
   },
 
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
   },
 
   modalHeader: {
-    backgroundColor: "#DA0B0B",
+    backgroundColor: "#f33030",
     borderTopLeftRadius: 6,
     borderTopRightRadius: 6,
     paddingHorizontal: 30,
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
   },
 
   addButtonContainerStyle: {
-    backgroundColor: "#DA0B0B",
+    backgroundColor: "#f33030",
     paddingVertical: 10,
     paddingHorizontal: 25,
   },

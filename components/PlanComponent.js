@@ -71,7 +71,7 @@ const PlanComponent = ({ planID, planTitle, status, setPlanStatus, setUploadModa
                             checkedIcon={
                                 <View style={styles.iconStyle}>
                                     {
-                                        status === 'done' && <Icon name="check" color="#DA0B0B" size={35} style={styles.tickComponent} />
+                                        status === 'done' && <Icon name="check" color="#f33030" size={35} style={styles.tickComponent} />
                                     }
                                 </View>
                             }
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     },
 
     uploadButtonStyles: {
-        backgroundColor: '#DA0B0B',
+        backgroundColor: '#f33030',
         position: "absolute",
         height: 81,
         right: 0,
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     },
     
     uploadMorePhotos: {
-        backgroundColor: '#DA0B0B',
+        backgroundColor: '#f33030',
         position: "absolute",
         height: 81,
         right: 85,

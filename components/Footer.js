@@ -34,7 +34,7 @@ const Footer = ({ screen, setScreen }) => {
 
                 <TouchableOpacity style={
                     [styles.buttonStyle, isOpen ? {
-                        backgroundColor: '#DA0B0B',
+                        backgroundColor: '#f33030',
                         color: 'white',
                     } : {}]
                 }
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     },
     
     activeTabBarStyle: {
-        backgroundColor: '#DA0B0B',
+        backgroundColor: '#f33030',
         height: 2,
         width: 15,
         top: 5

@@ -23,7 +23,7 @@ const PlanWithPhotos = ({ plans, photos }) => {
     <View>
       {/* {plansWithPhotos === null && (
         <View style={styles.loading}>
-          <ActivityIndicator size="large" color="#DA0B0B" />
+          <ActivityIndicator size="large" color="#f33030" />
         </View>
       )} */}
       {plansWithPhotos && plansWithPhotos.length !== 0 ? (
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   uploadTextStyle: {
     fontSize: 23,
     textAlign: "center",
-    color: "#DA0B0B",
+    color: "#f33030",
     fontWeight: "bold"
   },
 });

@@ -36,7 +36,7 @@ const AddPlan = ({ state, close, addNewPlan }) => {
 const styles = StyleSheet.create({
     containerStyle: {
         height: 250,
-        backgroundColor: '#DA0B0B',
+        backgroundColor: '#f33030',
         position: "absolute",
         bottom: 0,
         width: '100%',
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     },
 
     addButtonTitleStyle: {
-        color: '#DA0B0B',
+        color: '#f33030',
         fontWeight: 'bold',
     }
 });

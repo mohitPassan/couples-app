@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   uploadTextStyle: {
     fontSize: 23,
     textAlign: "center",
-    color: "#DA0B0B",
+    color: "#f33030",
     fontWeight: "bold"
   },
 });
